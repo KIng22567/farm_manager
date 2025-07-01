@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Records</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+<p><a href="/add-animal" class="nav-link">Add New Animal</a></p>
+
+        <h1>Registered Animals</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag Number</th>
+                    <th>Species</th>
+                    <th>Breed</th>
+                    <th>Sex</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for animal in animals %}
+                <tr>
+                    <td>{{animal.tag_number }}</td>
+                    <td>{{animal.species}}</td>
+                    <td>{{animal.breed}}</td>
+                    <td>{{animal.sex}}</td>
+                    <td>{{animal.status}}</td>
+                    <td>
+                        <a href="/animals/{{animal.id}}/edit" class="action-button">Edit</a>
+                        <a href="/animals/{{animal.id}}/delete" class="action-button danger" onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Animal</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Edit Animal</h1>
+    <form method="POST" class="form-card">
+      <label>Tag Number</label>
+      <input name="tag_number" value="{{ animal.tag_number }}" required>
+
+      <label>Species</label>
+      <input name="species" value="{{ animal.species }}">
+
+      <label>Breed</label>
+      <input name="breed" value="{{ animal.breed }}">
+
+      <label>Sex</label>
+      <select name="sex">
+        <option value="Male" {% if animal.sex == 'Male' %}selected{% endif %}>Male</option>
+        <option value="Female" {% if animal.sex == 'Female' %}selected{% endif %}>Female</option>
+      </select>
+
+      <label>Status</label>
+      <input name="status" value="{{ animal.status }}">
+
+      <button type="submit">Update Animal</button>
+    </form>
+  </div>
+</body>
+</html>

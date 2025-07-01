@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Farm Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Farm Dashboard</h1>
+        <div class="dashboard-cards">
+            <div class="card">Total Animals: <strong>{{ total }}</strong></div>
+            <div class="card green">Alive: <strong>{{ alive }}</strong></div>
+            <div class="card orange">Sold: <strong>{{ sold }}</strong></div>
+            <div class="card red">Deceased: <strong>{{ deceased }}</strong></div>
+        </div>
+        <div style="margin-top: 30px;">
+            <a class="action-button" href="/animals">🐄 View Animals</a>
+            <a class="action-button" href="/add-animal">➕ Add Animal</a>
+        </div>
+
+
+        <h2>Animal Status Overview</h2>
+        <canvas id="statusChart" width="400" height="400"></canvas>
+    </div>
+<script>
+  const labels = {{ labels | tojson }};
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Animal Status',
+      data: {{ values | tojson }},
+      backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
+      borderColor: ['#1e7e34', '#d39e00', '#bd2130'],
+      borderWidth: 1
+    }]
+  };
+
+  const config = {
+    type: 'pie',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  };
+
+  new Chart(document.getElementById('statusChart'), config);
+</script>
+
+</body>
+</html>
