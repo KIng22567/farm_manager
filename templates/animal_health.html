@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Records</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Health Records for {{ animal.tag_number }}</h1>
+        <form method="POST" class="form-card">
+            <label>Date</label>
+            <input name="date" type="date" required>
+
+            <label>Treatment</label>
+            <input name="treatment" required>
+
+            <label>Notes</label>
+            <textarea name="notes"></textarea>
+
+            <button type="submit">➕ Add Record</button>
+        </form>
+
+        <h2>📋 Treatment History</h2>
+        <ul>
+            {% for record in animal.health_records %}
+            <li>
+                <strong>{{ record.date }}</strong> – {{ record.treatment }}<br>
+                {{ record.notes }}
+            </li>
+            {% else %}
+            <p>No health records yet.</p>
+            {% endfor %}
+        </ul>
+
+        <p><a class="nav-link" href="/animals">← Back to Animal List</a></p>
+    </div>
+</body>
+</html>

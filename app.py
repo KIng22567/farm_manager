@@ -1,6 +1,9 @@
+from datetime import datetime
 from flask import Flask, render_template, request, redirect
 from models.animal import db, Animal
 import os
+
+from models.health_record import HealthRecord
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///farm.db'
@@ -52,7 +55,7 @@ def delete_animal(animal_id):
     db.session.commit()
     return redirect("/animals")
 
-@app.route("/")
+
 @app.route("/dashboard")
 def dashboard():
     animals = Animal.query.all()
@@ -66,6 +69,29 @@ def dashboard():
     return render_template("dashboard.html",total=total,alive=alive,sold=sold,deceased=deceased,
                            labels=labels,values=values)
 
+@app.route("/animals/<int:animal_id>/health", methods=["GET", "POST"])
+def animal_health(animal_id):
+    animal = Animal.query.get_or_404(animal_id)
+    if request.method == "POST":
+        date_str = request.form["date"]
+        date_obj = datetime.strptime(date_str,"%Y-%m-%d").date()
+        record = HealthRecord(
+            animal_id=animal.id,
+            date=date_obj,
+            treatment=request.form["treatment"],
+            notes=request.form["notes"]
+        )
+        db.session.add(record)
+        db.session.commit()
+        return redirect(f"/animals/{animal.id}/health")
+    return render_template("animal_health.html", animal=animal)
+
+
+@app.route("/")
+@app.route("/login")
+def login():
+    return render_template("login_form.html")
 
 if __name__ == "__main__":
+    print(Animal.__tablename__)
     app.run(host='0.0.0.0', port=5000,debug=True)
