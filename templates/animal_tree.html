@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% block title %}Animal Tree{% endblock %}
+{% block content %}
+<div class="animal-tree-container">
+  <h2 class="animal-tree-title">🐾 Animal Hierarchy</h2>
+  <input type="text" id="searchBox" class="animal-tree-search" placeholder="🔍 Search by breed or tag number...">
+  <ul id="animalTree" class="animal-tree">
+    {% for species, breeds in tree.items() %}
+      <li class="species">
+        <div class="species-card-tree">
+          <img class="species-img" src="/static/species/{{ species|lower|replace(' ', '_') }}.jpeg" alt="{{ species }}" onerror="this.onerror=null;this.src='/static/species/default.jpg';">
+          <span class="toggle species-toggle" onclick="toggleList(this)"><b>{{ species }}</b></span>
+        </div>
+        <ul>
+          {% for breed, animals in breeds.items() %}
+            <li class="breed">
+              <span class="toggle breed-toggle" onclick="toggleList(this)"><i>{{ breed }}</i></span>
+              <ul>
+                {% for animal in animals %}
+                  <li class="animal-leaf">
+                    <a href="/animals/{{ animal.id }}/health" title="View health record">
+                      <span class="animal-tag">{{ animal.tag_number }}</span>
+                    </a>
+                    <span class="animal-status {{ animal.status|lower }}">{{ animal.status }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+<script>
+function toggleList(el) {
+  var next = el.nextElementSibling;
+  if (next && next.tagName === 'UL') {
+    next.style.display = next.style.display === 'none' ? '' : 'none';
+  }
+  el.classList.toggle('open');
+}
+// Collapse all by default
+window.onload = function() {
+  document.querySelectorAll('#animalTree ul').forEach(function(ul) {
+    ul.style.display = 'none';
+  });
+  document.querySelectorAll('#animalTree > li > ul').forEach(function(ul) {
+    ul.style.display = '';
+  });
+};
+// Search filter
+const searchBox = document.getElementById('searchBox');
+searchBox.addEventListener('input', function() {
+  const val = this.value.toLowerCase();
+  document.querySelectorAll('#animalTree li').forEach(function(li) {
+    if (li.textContent.toLowerCase().includes(val)) {
+      li.style.display = '';
+    } else {
+      li.style.display = 'none';
+    }
+  });
+  // Always show species and breed headers if any child matches
+  document.querySelectorAll('#animalTree > li').forEach(function(speciesLi) {
+    let anyBreedVisible = false;
+    speciesLi.querySelectorAll('ul > li').forEach(function(breedLi) {
+      if (breedLi.style.display !== 'none') anyBreedVisible = true;
+    });
+    speciesLi.style.display = anyBreedVisible ? '' : 'none';
+  });
+});
+</script>
+<style>
+.animal-tree-container {
+  background: #fafdff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+  padding: 36px 32px 28px 32px;
+  max-width: 700px;
+  margin: 48px auto 0 auto;
+}
+.animal-tree-title {
+  margin-bottom: 18px;
+  color: #2563eb;
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+.animal-tree-search {
+  width: 100%;
+  max-width: 340px;
+  padding: 10px 14px;
+  margin: 0 auto 24px auto;
+  display: block;
+  border: 1.5px solid #dbeafe;
+  border-radius: 8px;
+  font-size: 1.08em;
+  background: #fafdff;
+  box-shadow: 0 1px 4px rgba(44,62,80,0.04);
+}
+.animal-tree {
+  list-style-type: none;
+  padding-left: 0.5em;
+}
+.animal-tree ul {
+  list-style-type: none;
+  padding-left: 1.5em;
+  margin-top: 6px;
+}
+.toggle {
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.toggle.open, .toggle:hover {
+  background: #e3eafc;
+  color: #2563eb;
+}
+.species > .toggle {
+  font-size: 1.18em;
+  font-weight: 700;
+  color: #1746a0;
+}
+.breed > .toggle {
+  font-size: 1.08em;
+  color: #388e3c;
+}
+.animal-leaf {
+  margin-bottom: 2px;
+  padding: 2px 0 2px 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.animal-tag {
+  font-weight: 600;
+  color: #2563eb;
+  background: #e3eafc;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 1em;
+  margin-right: 2px;
+}
+.animal-status {
+  font-size: 0.98em;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #555;
+  margin-left: 2px;
+}
+.animal-status.active { background: #e8f5e9; color: #388e3c; }
+.animal-status.sick { background: #ffebee; color: #d32f2f; }
+.animal-status.sold { background: #fff8e1; color: #ff9800; }
+.animal-status.deceased { background: #ececec; color: #888; }
+@media (max-width: 800px) {
+  .animal-tree-container { max-width: 99vw; padding: 12px; border-radius: 10px; }
+  .animal-tree-title { font-size: 1.3em; }
+}
+  .species-card-tree {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #e3eafc;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+    padding: 8px 18px 8px 8px;
+    margin-bottom: 10px;
+    margin-top: 8px;
+    min-width: 220px;
+    max-width: 420px;
+  }
+  .species-img {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid #b6c6e3;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(44,62,80,0.06);
+  }
+</style>
+{% endblock %}

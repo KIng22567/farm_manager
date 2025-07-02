@@ -1,36 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Animal</title>
-    <link rel="stylesheet" href="/static/style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <p><a href="/animals" class="nav-link">← View Animal List</a></p>
-      <h1>Add Livestock Record</h1>
-      <form method="POST" class="form-card">
-        <label for="">Tag Number</label>
-        <input type="text" name="tag_number" required />
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
 
-        <label for="">Species</label>
-        <input type="text" name="species" />
+{% block content %}
+<div class="container">
+  <h1 style="margin-bottom: 18px;">Add Livestock Record</h1>
+  <form method="POST" class="form-card">
+    <label for="">Tag Number</label>
+    <input type="text" name="tag_number" required />
 
-        <label for="">Breed</label>
-        <input type="text" name="breed" id="" />
+    <label for="">Species</label>
+    <input type="text" name="species" />
 
-        <label for="">Sex</label>
-        <select name="sex" id="">
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+    <label for="">Breed</label>
+    <input type="text" name="breed" id="" />
 
-        <label for="">Status</label>
-        <input type="text" name="status" id="" />
+    <label for="">Sex</label>
+    <select name="sex" id="">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
 
-        <button type="submit">Save Animal</button>
-      </form>
-    </div>
-  </body>
-</html>
+    <label for="">Status</label>
+    <input type="text" name="status" id="" />
+
+    <button type="submit">Save Animal</button>
+  </form>
+</div>
+{%endblock%}

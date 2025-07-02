@@ -1,38 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Health Records</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Health Records for {{ animal.tag_number }}</h1>
-        <form method="POST" class="form-card">
-            <label>Date</label>
-            <input name="date" type="date" required>
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
 
-            <label>Treatment</label>
-            <input name="treatment" required>
+{% block content %}
+  <div class="container">
+    <h1 style="margin-bottom: 18px;">Health Records for {{ animal.tag_number }}</h1>
+    <form method="POST" class="form-card">
+        <label>Date</label>
+        <input name="date" type="date" required>
 
-            <label>Notes</label>
-            <textarea name="notes"></textarea>
+        <label>Treatment</label>
+        <input name="treatment" required>
 
-            <button type="submit">➕ Add Record</button>
-        </form>
+        <label>Notes</label>
+        <textarea name="notes"></textarea>
 
-        <h2>📋 Treatment History</h2>
-        <ul>
-            {% for record in animal.health_records %}
-            <li>
-                <strong>{{ record.date }}</strong> – {{ record.treatment }}<br>
-                {{ record.notes }}
-            </li>
-            {% else %}
-            <p>No health records yet.</p>
-            {% endfor %}
-        </ul>
+        <button type="submit">➕ Add Record</button>
+    </form>
 
-        <p><a class="nav-link" href="/animals">← Back to Animal List</a></p>
-    </div>
-</body>
-</html>
+    <h2 style="margin-top: 32px;">📋 Treatment History</h2>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+        {% for record in animal.health_records %}
+        <li style="background: #f7fafd; border-radius: 8px; margin-bottom: 14px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(44,62,80,0.05);">
+            <strong style="color:#2563eb;">{{ record.date }}</strong> – <span style="font-weight:600;">{{ record.treatment }}</span><br>
+            <span style="color:#444;">{{ record.notes }}</span>
+        </li>
+        {% else %}
+        <p>No health records yet.</p>
+        {% endfor %}
+    </ul>
+
+    <p style="margin-top: 28px;"><a class="nav-link" href="/animals">← Back to Animal List</a></p>
+  </div>
+{% endblock %}

@@ -1,56 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Farm Dashboard</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <div class="container">
-        <h1>📊 Farm Dashboard</h1>
-        <div class="dashboard-cards">
-            <div class="card">Total Animals: <strong>{{ total }}</strong></div>
-            <div class="card green">Alive: <strong>{{ alive }}</strong></div>
-            <div class="card orange">Sold: <strong>{{ sold }}</strong></div>
-            <div class="card red">Deceased: <strong>{{ deceased }}</strong></div>
-        </div>
-        <div style="margin-top: 30px;">
-            <a class="action-button" href="/animals">🐄 View Animals</a>
-            <a class="action-button" href="/add-animal">➕ Add Animal</a>
-        </div>
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
 
+{% block content %}
+  <div class="container">
+    <h1 style="margin-bottom: 18px;">📊 Farm Dashboard</h1>
 
-        <h2>Animal Status Overview</h2>
-        <canvas id="statusChart" width="400" height="400"></canvas>
+    <div class="dashboard-cards">
+      <div class="card">Total Animals: <strong>{{ total }}</strong></div>
+      <div class="card green">Alive: <strong>{{ alive }}</strong></div>
+      <div class="card orange">Sold: <strong>{{ sold }}</strong></div>
+      <div class="card red">Deceased: <strong>{{ deceased }}</strong></div>
     </div>
-<script> 
-  const labels = {{ labels | tojson }};
-  const data = {
-    labels: labels,
-    datasets: [{
-      label: 'Animal Status',
-      data: {{ values | tojson }},
-      backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
-      borderColor: ['#1e7e34', '#d39e00', '#bd2130'],
-      borderWidth: 1
-    }]
-  };
 
-  const config = {
-    type: 'pie',
-    data: data,
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom'
+    <h2 style="margin-top: 30px;">Animal Status Overview</h2>
+    <div style="background:#f7fafd; border-radius:12px; box-shadow:0 2px 8px rgba(44,62,80,0.06); padding:24px 0; margin-bottom:24px;">
+      <canvas id="statusChart" width="400" height="400"></canvas>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <a class="action-button" href="/animals">🐄 View All Animals</a>
+      <a class="action-button" href="/add-animal">➕ Add New Animal</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const labels = {{ labels | tojson }};
+    const data = {
+      labels: labels,
+      datasets: [{
+        data: {{ values | tojson }},
+        backgroundColor: ['#388e3c', '#ff9800', '#d32f2f'],
+        borderWidth: 1
+      }]
+    };
+    new Chart(document.getElementById('statusChart'), {
+      type: 'pie',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
         }
       }
-    }
-  };
-
-  new Chart(document.getElementById('statusChart'), config);
-</script>
-
-</body>
-</html>
+    });
+  </script>
+{% endblock %}

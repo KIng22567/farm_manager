@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from models.user import db
 
-db = SQLAlchemy()
 
 class Animal(db.Model):
     __tablename__ = 'animal'

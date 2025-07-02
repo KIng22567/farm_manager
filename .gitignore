@@ -1,0 +1,16 @@
+# Ignore the SQLite database file
+instance/*.db
+
+# Ignore the Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore the virtual environment directory
+venv/
+
+# Ignore the .env file for environment variables
+.env
+
+# Ignore the audit log file
+password_reset_audit.log
+config.py

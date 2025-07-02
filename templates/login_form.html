@@ -1,69 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="/static/style.css">
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <div class="login-container" style="max-width: 400px; margin: 80px auto; padding: 38px 32px 28px 32px; background: #fff; border-radius: 16px; box-shadow: 0 6px 32px rgba(44,62,80,0.10);">
+        <h1 style="text-align: center; margin-bottom: 28px; color: #2563eb; font-weight: 700; letter-spacing: 0.03em;">Sign in to Farm Manager</h1>
+        <form action="/login" method="POST">
+            <label for="username" style="font-weight: 600; margin-top: 16px; display: block; color: #2d3a4a;">Username</label>
+            <input type="text" name="username" required style="width: 100%; padding: 12px; margin-top: 7px; border: 1.5px solid #dbeafe; border-radius: 6px; background: #fafdff; font-size: 1em; transition: border 0.2s;">
 
-    <style>
-        .login-container{
-            max-width: 400px;
-            margin: 60px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0,0.1);
-        }
+            <label for="password" style="font-weight: 600; margin-top: 16px; display: block; color: #2d3a4a;">Password</label>
+            <input type="password" name="password" required style="width: 100%; padding: 12px; margin-top: 7px; border: 1.5px solid #dbeafe; border-radius: 6px; background: #fafdff; font-size: 1em; transition: border 0.2s;">
 
-        .login-container h1{
-            text-align: center;
-            margin-bottom: 24px;
-        }
+            <button type="submit" style="width: 100%; margin-top: 28px; padding: 14px 0; background: linear-gradient(90deg, #2563eb 0%, #388e3c 100%); border: none; color: white; font-weight: 700; font-size: 1.08em; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 8px rgba(44,62,80,0.07); transition: background 0.2s, box-shadow 0.2s; letter-spacing: 0.03em;">Sign In</button>
 
-        .login-container label{
-            font-weight: bold;
-            margin-top: 12px;
-            display: block;
-        }
-
-        .login-container input{
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .login-container button{
-            width: 100%;
-            margin-top: 24px;
-            padding: 12px;
-            background-color: #007bff;
-            border: none;
-            color: white;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .login-container button:hover{
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <form action="" method="POST">
-            <label for="username">Username</label>
-            <input type="text" name="username" required>
-
-            <label for="password">Password</label>
-            <input type="password" name="password" required>
-
-            <button type="submit">Sign In</button>
+            <div class="login-links" style="margin-top: 20px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
+                <a href="/forgot-password" class="nav-link" style="color: #2563eb; text-decoration: none; font-weight: 600; transition: color 0.18s;">Forgot password?</a>
+            </div>
         </form>
     </div>
-</body>
-</html>
+{% endblock %}

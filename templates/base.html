@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Farm Manager{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body {
+      background: linear-gradient(120deg, #e3eafc 0%, #f8fafc 100%);
+      min-height: 100vh;
+    }
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 0;
+    }
+    .flash-message {
+      padding: 16px 24px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-weight: 600;
+      font-size: 1.04em;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+    }
+    .flash-success { background: #e8f5e9; color: #388e3c; border: 1px solid #c8e6c9; }
+    .flash-danger { background: #ffebee; color: #d32f2f; border: 1px solid #ffcdd2; }
+    .flash-info { background: #e3eafc; color: #2563eb; border: 1px solid #b6c6e3; }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="nav-left">
+      <span style="font-weight:700; color:#fff; margin-right:18px;">
+        {{ (settings.farm_name if settings is defined else "Farm Manager") }}
+      </span>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/animals">Animals</a>
+      <a href="/health-records">Health</a>
+      {% if g.current_user and g.current_user.role == 'admin' %}
+        <a href="/users">Users</a>
+        <a href="/register">Add User</a>
+        <a href="/settings">Settings</a>
+      {% endif %}
+    </div>
+    <div class="nav-right">
+      {% if g.current_user %}
+        <span style="margin-right: 12px; font-weight:600; color:#fff; letter-spacing:0.01em;">👤 {{ g.current_user.username }}</span>
+        <a href="/logout">Logout</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="content">
+    {% for message in get_flashed_messages(with_categories=true) %}
+      <div class="flash-message flash-{{ message[0] }}">
+        {{ message[1] }}
+      </div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

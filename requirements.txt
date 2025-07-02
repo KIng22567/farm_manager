@@ -1,0 +1,10 @@
+Flask
+Flask-Migrate
+Flask-SQLAlchemy
+email-validator
+python-dotenv
+Werkzeug
+itsdangerous
+Jinja2
+SQLAlchemy
+alembic

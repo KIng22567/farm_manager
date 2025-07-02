@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 style="margin-bottom: 18px;">App Settings</h1>
+  <form method="POST" class="form-card">
+    <label>Farm Name</label>
+    <input type="text" name="farm_name" value="{{ settings.farm_name }}" required>
+    <button type="submit">Save Settings</button>
+  </form>
+</div>
+{% endblock %}

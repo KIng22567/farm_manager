@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 style="margin-bottom: 18px;">Edit User</h1>
+  <form method="POST" class="form-card">
+    <label>Username</label>
+    <input type="text" name="username" value="{{ user.username }}" required>
+
+    <label>Email</label>
+    <input type="email" name="email" value="{{ user.email }}" required>
+
+    <label>Role</label>
+    <select name="role" required>
+      <option value="staff" {% if user.role == "staff" %}selected{% endif %}>Staff</option>
+      <option value="admin" {% if user.role == "admin" %}selected{% endif %}>Admin</option>
+    </select>
+
+    <label>New Password (leave blank to keep current)</label>
+    <input type="password" name="password" autocomplete="new-password">
+
+    <button type="submit">Update User</button>
+  </form>
+</div>
+{% endblock %}

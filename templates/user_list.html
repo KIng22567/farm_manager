@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 style="margin-bottom: 18px;">Users</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <a href="{{ url_for('edit_user', user_id=user.id) }}" class="action-button">Edit</a>
+          {% if user.username != "admin" %}
+          <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post" style="display:inline;">
+            <button type="submit" class="action-button danger" onclick="return confirm('Delete this user?')">Delete</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div style="margin-top: 40px">
+    <a class="action-button" href="{{ url_for('register') }}">➕ Add New User</a>
+  </div>
+</div>
+{% endblock %}

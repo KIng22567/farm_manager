@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Edit Animal</title>
-  <link rel="stylesheet" href="/static/style.css" />
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
   <div class="container">
-    <h1>Edit Animal</h1>
+    <h1 style="margin-bottom: 18px;">Edit Animal</h1>
     <form method="POST" class="form-card">
       <label>Tag Number</label>
       <input name="tag_number" value="{{ animal.tag_number }}" required>
@@ -29,5 +26,4 @@
       <button type="submit">Update Animal</button>
     </form>
   </div>
-</body>
-</html>
+{%endblock%}
